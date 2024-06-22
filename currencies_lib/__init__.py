@@ -3,7 +3,7 @@ from datetime import datetime
 
 __version__ = "0.1"
 
-
+Currency_Formater = _Currency_Formater()
 
 test = ''
 """Provide several sample math calculations.
@@ -39,5 +39,7 @@ def teste() -> None:
 
 _inst = _Currency_Formater()
 BRL = _inst.BRL
+USD = _inst.USD
+EUR = _inst.EUR
 
 del datetime

@@ -2,6 +2,8 @@ class _Currency_Formater():
 
     def __init__(self):
         self.nof = "Missing value"
+        self.currency_link = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/{}.json"
+        # ex.: print(self.currency_link.format("usd"))
 
     def _value_check(func):
         def inner(self, value = None, **kwargs):
@@ -16,6 +18,9 @@ class _Currency_Formater():
         def inner(self, value = None, **kwargs):
             print("!!!!!!!!!")
         return inner
+    
+    def _format_api_link(self, currency):
+        return self.currency_link.format(currency)
 
     @_value_check
     def BRL(self, value = None, *, teste=False) -> str:
