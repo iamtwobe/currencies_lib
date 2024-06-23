@@ -37,9 +37,10 @@ def teste() -> None:
 
 # Lógica para o GET da API de maneira assíncrona seguindo a data
 
-_inst = _Currency_Formater()
-BRL = _inst.BRL
-USD = _inst.USD
-EUR = _inst.EUR
+BRL = Currency_Formater.BRL
+USD = Currency_Formater.USD
+EUR = Currency_Formater.EUR
+str_to_float = Currency_Formater.str_to_float
+as_percentage = Currency_Formater.as_percentage
 
 del datetime

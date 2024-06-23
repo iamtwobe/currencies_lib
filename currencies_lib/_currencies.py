@@ -7,17 +7,17 @@ class _Currency_Formater():
         # ex.: print(self.currency_link.format("usd"))
 
     def _value_check(func):
-        def inner(self, value = None, **kwargs):
+        def inner(self, value = None, *args, **kwargs):
             try:
+                if not value:
+                    print('\033[91m' + f'ERROR: Missing value for "Currency Formatter.{func.__name__}()"', '\033[0m')
+                    return None
                 if type(value) in (float, int):
                     pass
                 else:
                     raise ValueError
             except ValueError:
                 print(f'Currency Formatter: The inputted value is not a Integer or a Float. ("{type(value)}")')
-                return None
-            if not value:
-                print('\033[91m', f'ERROR: Missing value for "{__class__.__name__} ({func.__name__})"', '\033[0m')
                 return None
             function_exec = func(self, value, **kwargs)
             return function_exec
@@ -32,10 +32,22 @@ class _Currency_Formater():
         return self.currency_link.format(currency)
 
     @_value_check
-    def as_percentage(self, value = None, *, decimals=2, percent_symb=True) -> str:
+    def as_percentage(self, value = None, percent = None, *, decimals=2, isfloat=True, subtraction=False) -> float:
+        # Usage: as_percentage(value=100, percentage="25%") -> 25
         try:
-            final_value = f"{float(value) * 100:.{decimals}f}{"%" if percent_symb == True else ""}"
+            if not percent:
+                print(f'Currency Formatter: The percentage value is missing.')
+                return None
+            if type(percent) == str:
+                percent = float(percent.replace("%", ""))
+            match subtraction:
+                case True:
+                    final_value = f"{value - (percent * float(value) / 100):.{decimals}f}"
+                case False:
+                    final_value = f"{percent * float(value) / 100:.{decimals}f}"
 
+            if isfloat == True:
+                return float(final_value)
             return final_value
         except Exception as e:
             print(e)
@@ -99,6 +111,7 @@ class _Currency_Formater():
         return None
 
     def str_to_float(self, value = None) -> float:
+        # Can be imprecise
         try:
             if value is None:
                 raise ValueError("Currency Formatter: The value must be provided")
