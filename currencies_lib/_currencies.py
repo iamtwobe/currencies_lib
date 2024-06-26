@@ -5,7 +5,10 @@ class _Currency_Formater():
     def __init__(self):
         self.nof = "Missing value"
         self.symbols = r" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz$£¢<>?!%&*(){}[]-=+~^|/"
+        self.right_positions = ["right", "r"]
+        self.left_positions = ["left", "l"]
         self.currency_link = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/{}.json"
+        
         # ex.: print(self.currency_link.format("usd"))
 
     def _value_check(func):
@@ -95,53 +98,10 @@ class _Currency_Formater():
             print(f'Currency Formatter (Unexpected): {e}')
 
         return None
-    
-    def identify_currency(self, currency = None):
-
-        if not currency:
-            print(f'Currency Formatter: The currency value is missing.')
-            return None
-        if type(currency) != str:
-            print(f'Currency Formatter: The inputted currency is not a String type. ("{type(currency)}")')
-            return None
-
-        # Regex method to separate any currency symbols (ex.: EUR, USD, BRL)
-
-        try:
-            # API call
-            pass
-        except Exception as e:
-            print(f'Currency Formatter (Unexpected): {e}')
-
-        return None
-    
+   
     @_value_check
     def value_simplifier(self, value = None):
         pass
-
-    @_value_check
-    def BRL(self, value = None, *, thousands_sep: str = '.',
-            decimal_sep: str = ',',
-            currency_sign=None, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
-
-        # Definição de métodos de uso a partir de kwargs
-        try:
-            if currency_sign == True:
-                final_value = f"R$ {float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
-            else:
-                final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
-
-            return final_value
-        
-        except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
-        
-        except Exception as e:
-            print(e)
-
-        return None
 
     def str_to_float(self, value = None) -> float:
         # Can be imprecise
@@ -178,13 +138,126 @@ class _Currency_Formater():
         return None
 
     @_value_check
-    def USD(self, value = None) -> str:
-        print("USD", value)
+    def BRL(self, value = None, *, thousands_sep: str = '.',
+            decimal_sep: str = ',',
+            currency_sign=None, decimals=2) -> str:
+        # You can define the decimal places (default = 2)
+        # You can define if you want the currency sign (default = False)
 
-        return "NOTFINISHED"
+        try:
+            if currency_sign == True:
+                final_value = f"R$ {float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+            else:
+                final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+        
+        except Exception as e:
+            print(e)
+
+        return None
 
     @_value_check
-    def EUR(self, value = None) -> str:
-        print("EUR", value)
+    def USD(self, value = None, *, thousands_sep: str = ',',
+            decimal_sep: str = '.',
+            currency_sign=None, decimals=2) -> str:
+        # You can define the decimal places (default = 2)
+        # You can define if you want the currency sign (default = False)
 
-        return "NOTFINISHED"
+        try:
+            if currency_sign == True:
+                final_value = f"$ {float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+            else:
+                final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+        
+        except Exception as e:
+            print(e)
+
+        return None
+
+    @_value_check
+    def EUR(self, value = None, *, thousands_sep: str = '.',
+            decimal_sep: str = ',', sign_position="LEFT",
+            currency_sign=None, eur_sign=False, decimals=2) -> str:
+        # You can define the decimal places (default = 2)
+        # You can define if you want the currency sign (default = False)
+
+        try:
+            sign_position = sign_position.lower()
+            if sign_position not in self.right_positions and sign_position not in self.left_positions:
+                print(f'Currency Formatter: Invalid sign_position inputted. ("{sign_position}")')
+                return None
+            
+            if sign_position in self.right_positions:
+                sign_position = "RIGHT"
+            else:
+                sign_position = "LEFT"
+
+            if eur_sign == True:
+                eur_sign = "€"
+            elif eur_sign == False:
+                eur_sign = "EUR"
+
+            if currency_sign == True:
+                match sign_position:
+                    case "RIGHT":
+                        final_value = f"{float(value):_.{decimals}f} {eur_sign}".replace('.', decimal_sep).replace('_', thousands_sep)
+                    case "LEFT":
+                        final_value = f"{eur_sign} {float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+            else:
+                final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+        
+        except Exception as e:
+            print(e)
+
+        return None
+    
+    @_value_check
+    def RUB(self, value = None, *, thousands_sep: str = ' ',
+            decimal_sep: str = ',',
+            currency_sign=None, sign_position="LEFT", decimals=2) -> str:
+        # You can define the decimal places (default = 2)
+        # You can define if you want the currency sign (default = False)
+
+        try:
+            sign_position = sign_position.lower()
+            if sign_position not in self.right_positions and sign_position not in self.left_positions:
+                print(f'Currency Formatter: Invalid sign_position inputted. ("{sign_position}")')
+                return None
+            
+            if sign_position in self.right_positions:
+                sign_position = "RIGHT"
+            else:
+                sign_position = "LEFT"
+
+            if currency_sign == True:
+                match sign_position:
+                    case "RIGHT":
+                        final_value = f"{float(value):_.{decimals}f} ₽".replace('.', decimal_sep).replace('_', thousands_sep)
+                    case "LEFT":
+                        final_value = f"₽ {float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+            else:
+                final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+        
+        except Exception as e:
+            print(e)
+
+        return None

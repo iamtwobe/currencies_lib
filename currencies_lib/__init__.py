@@ -40,9 +40,9 @@ def teste() -> None:
 BRL = Currency_Formater.BRL
 USD = Currency_Formater.USD
 EUR = Currency_Formater.EUR
+RUB = Currency_Formater.RUB
 custom_format = Currency_Formater.custom_format
 str_to_float = Currency_Formater.str_to_float
 as_percentage = Currency_Formater.as_percentage
-identify_currency = Currency_Formater.identify_currency
 
 del datetime
