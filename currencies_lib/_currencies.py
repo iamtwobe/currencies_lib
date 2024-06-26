@@ -1,3 +1,5 @@
+import re
+
 class _Currency_Formater():
 
     def __init__(self):
@@ -24,11 +26,13 @@ class _Currency_Formater():
         return inner
     
     def _currency_data_check(func):
+        # Decorator to check and get the API values
         def inner(self, value = None, **kwargs):
             print("!!!!!!!!!")
         return inner
     
     def _format_api_link(self, currency):
+        #may be useles actually
         return self.currency_link.format(currency)
 
     @_value_check
@@ -59,6 +63,12 @@ class _Currency_Formater():
             thousands_sep: str=',', decimal_sep: str='.',
             custom_format=None) -> str:
         
+        ''' esse módulo faz isso aqui
+        
+        >> pew pwew
+        - `aaha(a, b)` - hihihiha.
+        '''
+        
         if not custom_format:
             print(f'Currency Formatter: Format must be provided.')
             return None
@@ -85,6 +95,29 @@ class _Currency_Formater():
             print(f'Currency Formatter (Unexpected): {e}')
 
         return None
+    
+    def identify_currency(self, currency = None):
+
+        if not currency:
+            print(f'Currency Formatter: The currency value is missing.')
+            return None
+        if type(currency) != str:
+            print(f'Currency Formatter: The inputted currency is not a String type. ("{type(currency)}")')
+            return None
+
+        # Regex method to separate any currency symbols (ex.: EUR, USD, BRL)
+
+        try:
+            # API call
+            pass
+        except Exception as e:
+            print(f'Currency Formatter (Unexpected): {e}')
+
+        return None
+    
+    @_value_check
+    def value_simplifier(self, value = None):
+        pass
 
     @_value_check
     def BRL(self, value = None, *, thousands_sep: str = '.',
