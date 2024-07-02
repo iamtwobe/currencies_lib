@@ -62,7 +62,8 @@ class _Currency_Formater():
         return None
 
     @_value_check
-    def custom_format(self, value = None, *, currency_sign: str=None, 
+    def custom_format(self, value = None, *, currency_sign: str=None,
+            sign_position: str='LEFT',
             thousands_sep: str=',', decimal_sep: str='.',
             custom_format=None) -> str:
         
@@ -86,8 +87,23 @@ class _Currency_Formater():
             return None
         
         try:
-            final_value = f"{(currency_sign + " ") if currency_sign != None else ""}{float(value):{custom_format}}"
-            final_value = final_value.replace('.', decimal_sep).replace(f'{custom_format[:1]}', thousands_sep)
+            sign_position = sign_position.lower()
+            if sign_position not in self.right_positions and sign_position not in self.left_positions:
+                print(f'Currency Formatter: Invalid sign_position inputted. ("{sign_position}")')
+                return None
+            
+            if sign_position in self.right_positions:
+                sign_position = "RIGHT"
+            else:
+                sign_position = "LEFT"
+
+            match sign_position:
+                case "RIGHT":
+                    final_value = f"{float(value):{custom_format}}{(" " + currency_sign) if currency_sign != None else ""}"
+                    final_value = final_value.replace('.', decimal_sep).replace(f'{custom_format[:1]}', thousands_sep)
+                case "LEFT":
+                    final_value = f"{(currency_sign + " ") if currency_sign != None else ""}{float(value):{custom_format}}"
+                    final_value = final_value.replace('.', decimal_sep).replace(f'{custom_format[:1]}', thousands_sep)
             
             return final_value
         
