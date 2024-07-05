@@ -156,7 +156,7 @@ class _Currency_Formater():
     @_value_check
     def BRL(self, value = None, *, thousands_sep: str = '.',
             decimal_sep: str = ',',
-            currency_sign=None, decimals=2) -> str:
+            currency_sign=False, decimals=2) -> str:
         # You can define the decimal places (default = 2)
         # You can define if you want the currency sign (default = False)
 
@@ -179,7 +179,7 @@ class _Currency_Formater():
     @_value_check
     def USD(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.',
-            currency_sign=None, decimals=2) -> str:
+            currency_sign=False, decimals=2) -> str:
         # You can define the decimal places (default = 2)
         # You can define if you want the currency sign (default = False)
 
@@ -202,7 +202,7 @@ class _Currency_Formater():
     @_value_check
     def EUR(self, value = None, *, thousands_sep: str = '.',
             decimal_sep: str = ',', sign_position="LEFT",
-            currency_sign=None, eur_sign=False, decimals=2) -> str:
+            currency_sign=False, eur_sign=False, decimals=2) -> str:
         # You can define the decimal places (default = 2)
         # You can define if you want the currency sign (default = False)
 
@@ -244,7 +244,7 @@ class _Currency_Formater():
     @_value_check
     def RUB(self, value = None, *, thousands_sep: str = ' ',
             decimal_sep: str = ',',
-            currency_sign=None, sign_position="LEFT", decimals=2) -> str:
+            currency_sign=False, sign_position="LEFT", decimals=2) -> str:
         # You can define the decimal places (default = 2)
         # You can define if you want the currency sign (default = False)
 
@@ -277,3 +277,76 @@ class _Currency_Formater():
             print(e)
 
         return None
+    
+    def GBP(self, value = None, *, thousands_sep: str = ',',
+            decimal_sep: str = '.',
+            currency_sign=False, decimals=2) -> str:
+
+        try:
+            if currency_sign == True:
+                final_value = f"£{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+            else:
+                final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+        
+        except Exception as e:
+            print(e)
+
+        return None
+
+    def JPY(self, value = None, *, thousands_sep: str = ',',
+            currency_sign=False) -> str:
+
+        try:
+            if currency_sign == True:
+                final_value = f"¥{float(value):_.0f}".replace('_', thousands_sep)
+            else:
+                final_value = f"{float(value):_.0f}".replace('_', thousands_sep)
+
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep}")')
+        
+        except Exception as e:
+            print(e)
+
+        return None
+
+    def CAD(self, value = None, *, thousands_sep: str = ',',
+            decimal_sep: str = '.', spaced_sign=False,
+            currency_sign=False, cad_sign=True, decimals=2) -> str:
+
+        try:
+            if currency_sign == True:
+                if cad_sign == True:
+                    cad_sign = "C$"
+                elif cad_sign == False:
+                    cad_sign = "$"
+
+                if spaced_sign == True:
+                    cad_sign += " "
+
+                final_value = f"{cad_sign}{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+            else:
+                final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+        
+        except Exception as e:
+            print(e)
+
+        return None
+
+    def INR(self, value = None, *, thousands_sep: str = ',',
+            decimal_sep: str = '.',
+            currency_sign=None, sign_position="LEFT", decimals=2) -> str:
+        '₹'
+        pass
