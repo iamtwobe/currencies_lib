@@ -140,20 +140,21 @@ class _Currency_Formater():
 
             elif ',' in value:
                 value = value.replace(',', '.')
-            elif '.' in value:
-                pass
             
+            elif '.' in value:
+                value = value.replace('.', '')
+
+            final_value = float(value)
+            return final_value
+
+        except ValueError:
+            print(f"Currency Formatter: Unable to convert '{value}' to float")
+            return None
+                    
         except Exception as e:
             print(e)
             return None
 
-        try:
-            final_value = float(value)
-            return final_value
-        except ValueError:
-            raise ValueError(f"Currency Formatter: Unable to convert '{value}' to float")
-
-        return None
 
     @_value_check
     def BRL(self, value = None, *, thousands_sep: str = '.',
