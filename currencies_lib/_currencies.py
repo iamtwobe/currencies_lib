@@ -346,19 +346,20 @@ class _Currency_Formater():
     def INR(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.',
             currency_sign=None, decimals=2) -> str:
-        
+
         try:
             if value >= 100000:
                 if '.' in str(value):
-                    int_value, dec_value = f'{value}'.split('.')
+                    int_value, dec_value = f'{value:.2f}'.split('.')
                 else:
                     int_value = f'{value}'
+                    dec_value = None
                 if len(int_value) > 3:
                     int_value = int_value[::-1]
                     int_value = [int_value[:3]] + [int_value[i:i + 2] for i in range(3, len(int_value), 2)]
                     int_value = thousands_sep.join(int_value)[::-1]
                 
-                final_value = int_value + (decimal_sep + dec_value if dec_value else '')
+                final_value = int_value + (decimal_sep + dec_value if dec_value else decimal_sep + ('0' * decimals))
                 if currency_sign:
                     final_value = f'₹{final_value}'
                     
