@@ -1,7 +1,7 @@
 import re
 from functools import wraps
 
-class _Currency_Formater():
+class _Currency_Formatter():
 
     def __init__(self):
         self.symbols = r" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz$£¢<>?!%&*(){}[]-=+~^|/"
@@ -119,14 +119,7 @@ class _Currency_Formater():
    
     @_value_check
     def unit_abbreviator(self, value = None):
-        pass
-
-    @_value_check
-    def as_time(self, value = None):
-        pass
-
-    @_value_check
-    def as_text(self, value = None):
+        # 1000 as > 1k || 1000000 as > 1M 
         pass
 
     @_value_check
