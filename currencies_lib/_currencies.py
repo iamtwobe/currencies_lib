@@ -118,7 +118,21 @@ class _Currency_Formater():
         return None
    
     @_value_check
-    def value_simplifier(self, value = None):
+    def unit_abbreviator(self, value = None):
+        pass
+
+    @_value_check
+    def as_time(self, value = None):
+        pass
+
+    @_value_check
+    def as_text(self, value = None):
+        pass
+
+    @_value_check
+    def format_currency(self, value = None, *, symbol='$',
+            position='left', thousand_sep=',',
+            decimal_sep='.', decimals=2):
         pass
 
     def str_to_float(self, value = None) -> float:
@@ -127,6 +141,11 @@ class _Currency_Formater():
             if value is None:
                 raise ValueError("Currency Formatter: The value must be provided")
             
+            if value.startswith('-'):
+                negative_num = True
+            else:
+                negative_num = False
+
             if any(char in value for char in self.symbols):
                 for char in self.symbols:
                     value = value.replace(char, '')
@@ -143,7 +162,11 @@ class _Currency_Formater():
             
             elif '.' in value:
                 value = value.replace('.', '')
-
+            
+            if negative_num:
+                final_value = float('-' + value)
+                return final_value
+                    
             final_value = float(value)
             return final_value
 
@@ -154,7 +177,6 @@ class _Currency_Formater():
         except Exception as e:
             print(e)
             return None
-
 
     @_value_check
     def BRL(self, value = None, *, thousands_sep: str = '.',
@@ -317,17 +339,17 @@ class _Currency_Formater():
         return None
 
     def CAD(self, value = None, *, thousands_sep: str = ',',
-            decimal_sep: str = '.', spaced_sign=False,
+            decimal_sep: str = '.', spaced_sign=True,
             currency_sign=False, cad_sign=True, decimals=2) -> str:
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
             if currency_sign == True:
-                if cad_sign == True:
-                    cad_sign = "C$"
-                elif cad_sign == False:
-                    cad_sign = "$"
-
+                match cad_sign:
+                    case True:
+                        cad_sign = "C$"
+                    case False:
+                        cad_sign = "$"
                 if spaced_sign == True:
                     cad_sign += " "
 
@@ -348,9 +370,14 @@ class _Currency_Formater():
             currency_sign=None, decimals=2) -> str:
 
         try:
-            if value >= 100000:
+            if value >= 100000 or value <= 100000:
+                if str(value).startswith('-'):
+                    negative_num = True
+                    value = str(value)[1:]
+                else:
+                    negative_num = False
                 if '.' in str(value):
-                    int_value, dec_value = f'{value:.2f}'.split('.')
+                    int_value, dec_value = f'{float(value):.2f}'.split('.')
                 else:
                     int_value = f'{value}'
                     dec_value = None
@@ -358,8 +385,11 @@ class _Currency_Formater():
                     int_value = int_value[::-1]
                     int_value = [int_value[:3]] + [int_value[i:i + 2] for i in range(3, len(int_value), 2)]
                     int_value = thousands_sep.join(int_value)[::-1]
-                
-                final_value = int_value + (decimal_sep + dec_value if dec_value else decimal_sep + ('0' * decimals))
+
+                final_value = (
+                    ('-' if negative_num else '') + int_value +
+                    (decimal_sep + dec_value if dec_value else decimal_sep +('0' * decimals))
+                )
                 if currency_sign:
                     final_value = f'₹{final_value}'
                     
