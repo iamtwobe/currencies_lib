@@ -33,3 +33,7 @@ as_percentage = Currency_Formatter.as_percentage
 as_text = GeneralFormatter.as_text
 as_number_base = GeneralFormatter.as_number_base
 as_time = GeneralFormatter.as_time
+as_scientific = GeneralFormatter.as_scientific
+as_roman_numeral = GeneralFormatter.as_roman_numeral
+as_phone_number = GeneralFormatter.as_phone_number
+as_metric = GeneralFormatter.as_metric

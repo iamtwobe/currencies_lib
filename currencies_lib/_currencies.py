@@ -45,9 +45,9 @@ class _Currency_Formatter():
         # Usage: as_percentage(value=100, percentage="25%") -> 25
         try:
             if not percent:
-                print(f'Currency Formatter: The percentage value is missing.')
+                print('Currency Formatter: The percentage value is missing.')
                 return None
-            if type(percent) == str:
+            if isinstance(percent, str):
                 percent = float(percent.replace("%", ""))
             match subtraction:
                 case True:
@@ -96,8 +96,10 @@ class _Currency_Formatter():
             
             if sign_position in self.right_positions:
                 sign_position = "RIGHT"
-            else:
+            elif sign_position in self.left_positions:
                 sign_position = "LEFT"
+            else:
+                raise ReferenceError
 
             match sign_position:
                 case "RIGHT":
@@ -112,6 +114,9 @@ class _Currency_Formatter():
         except ValueError:
             print(f'Currency Formatter: Invalid format inputted. ("{custom_format[0]}")')
 
+        except ReferenceError:
+            print(f'Currency Formatter: The inputted position is not valid. Must be left or right. ("{sign_position}")')
+
         except Exception as e:
             print(f'Currency Formatter (Unexpected): {e}')
 
@@ -123,10 +128,38 @@ class _Currency_Formatter():
         pass
 
     @_value_check
-    def format_currency(self, value = None, *, symbol='$',
-            position='left', thousand_sep=',',
+    def format_currency(self, value = None, *, currency_sign='',
+            sign_position='left', thousands_sep=',',
             decimal_sep='.', decimals=2):
-        pass
+        
+        try:
+            
+            final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+            if currency_sign:
+                if sign_position in self.right_positions:
+                    sign_position = "RIGHT"
+                elif sign_position in self.left_positions:
+                    sign_position = "LEFT"
+                else:
+                    raise ReferenceError
+                match sign_position:
+                    case 'LEFT':
+                        final_value = f"{currency_sign} {final_value}"
+                    case 'RIGHT':
+                        final_value = f"{final_value} {currency_sign}"
+
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+        
+        except ReferenceError:
+            print(f'Currency Formatter: The inputted position is not valid. Must be left or right. ("{sign_position}")')
+
+        except Exception as e:
+            print(e)
+
+        return None
 
     def str_to_float(self, value = None) -> float:
         # Can be imprecise
@@ -230,8 +263,10 @@ class _Currency_Formatter():
             
             if sign_position in self.right_positions:
                 sign_position = "RIGHT"
-            else:
+            elif sign_position in self.left_positions:
                 sign_position = "LEFT"
+            else:
+                raise ReferenceError
 
             if currency_sign == True:
                 if eur_sign == True:
@@ -252,6 +287,9 @@ class _Currency_Formatter():
         except TypeError:
             print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
         
+        except ReferenceError:
+            print(f'Currency Formatter: The inputted position is not valid. Must be left or right. ("{sign_position}")')
+
         except Exception as e:
             print(e)
 
@@ -272,8 +310,10 @@ class _Currency_Formatter():
             
             if sign_position in self.right_positions:
                 sign_position = "RIGHT"
-            else:
+            elif sign_position in self.left_positions:
                 sign_position = "LEFT"
+            else:
+                raise ReferenceError
 
             if currency_sign == True:
                 match sign_position:
@@ -289,6 +329,9 @@ class _Currency_Formatter():
         except TypeError:
             print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
         
+        except ReferenceError:
+            print(f'Currency Formatter: The inputted position is not valid. Must be left or right. ("{sign_position}")')
+
         except Exception as e:
             print(e)
 

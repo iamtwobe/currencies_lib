@@ -37,7 +37,7 @@ class _GeneralFormatter():
 
     @_value_check
     def as_number_base(self, value = None):
-        # binary, hexadecimal, octal
+        # value to > binary, hexadecimal, octal
         pass
 
     @_value_check
