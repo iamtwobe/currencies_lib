@@ -5,9 +5,9 @@ class _Currency_Formatter():
 
     def __init__(self):
         self.symbols = r" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz$£¢<>?!%&*(){}[]-=+~^|/"
+        self.unit_abbreviator_dict = {1_000: 'k', 1_000_000: 'M', 1_000_000_000: 'B', 1_000_000_000_000: 'T', 1_000_000_000_000_000: 'P'}
         self.right_positions = ["right", "r"]
         self.left_positions = ["left", "l"]
-        self.currency_link = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/{}.json"
         
         # ex.: print(self.currency_link.format("usd"))
 
@@ -28,17 +28,6 @@ class _Currency_Formatter():
             function_exec = func(self, value, **kwargs)
             return function_exec
         return inner
-    
-    def _currency_data_check(func):
-        # Decorator to check and get the API values
-        @wraps(func)
-        def inner(self, value = None, **kwargs):
-            print("!!!!!!!!!")
-        return inner
-    
-    def _format_api_link(self, currency):
-        #may be useles actually
-        return self.currency_link.format(currency)
 
     @_value_check
     def as_percentage(self, value = None, percent = None, *, decimals=2, isfloat=True, subtraction=False) -> float:
@@ -123,9 +112,16 @@ class _Currency_Formatter():
         return None
    
     @_value_check
-    def unit_abbreviator(self, value = None):
-        # 1000 as > 1k || 1000000 as > 1M 
-        pass
+    def unit_abbreviator(self, value, decimals=1) -> str:
+        # 1000 as > 1k || 1000000 as > 1M
+        try:
+            for divisor, suffix in sorted(self.unit_abbreviator_dict.items(), reverse=True):
+                if abs(value) >= divisor:
+                    abbreviated_value = value / divisor
+                    return f"{abbreviated_value:.{decimals}f}{suffix}"
+            return f'{value:.2f}'
+        except Exception as e:
+            print(e)
 
     @_value_check
     def format_currency(self, value = None, *, currency_sign='',
