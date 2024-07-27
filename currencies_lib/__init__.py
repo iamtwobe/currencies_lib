@@ -27,3 +27,4 @@ str_to_float = Currency_Formatter.str_to_float
 as_percentage = Currency_Formatter.as_percentage
 unit_abbreviator = Currency_Formatter.unit_abbreviator
 format_currency = Currency_Formatter.format_currency
+detect_currency = Currency_Formatter.detect_currency

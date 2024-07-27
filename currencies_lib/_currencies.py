@@ -1,4 +1,3 @@
-import re
 from functools import wraps
 
 class _Currency_Formatter():
@@ -8,6 +7,17 @@ class _Currency_Formatter():
         self.unit_abbreviator_dict = {1_000: 'k', 1_000_000: 'M', 1_000_000_000: 'B', 1_000_000_000_000: 'T', 1_000_000_000_000_000: 'P'}
         self.right_positions = ["right", "r"]
         self.left_positions = ["left", "l"]
+        self._currency_ban_symbols = r"ABCDEFGHIJKLMNOPQRSTUVWXYZ€₽£¥"
+        self.currencies = {
+            '$': 'USD',
+            'R$': 'BRL',
+            '€': 'EUR',
+            '₽': 'RUB',
+            '£': 'GBP',
+            '¥': 'JPY',
+            'C$': 'CAD',
+            '₹': 'INR'
+        }
         
         # ex.: print(self.currency_link.format("usd"))
 
@@ -47,6 +57,7 @@ class _Currency_Formatter():
             if isfloat == True:
                 return float(final_value)
             return final_value
+        
         except Exception as e:
             print(e)
         
@@ -120,8 +131,11 @@ class _Currency_Formatter():
                     abbreviated_value = value / divisor
                     return f"{abbreviated_value:.{decimals}f}{suffix}"
             return f'{value:.2f}'
+        
         except Exception as e:
             print(e)
+
+        return None
 
     @_value_check
     def format_currency(self, value = None, *, currency_sign='',
@@ -155,6 +169,18 @@ class _Currency_Formatter():
         except Exception as e:
             print(e)
 
+        return None
+
+    def detect_currency(self, value):
+        # Can be imprecise. Needs more tests
+        try:
+            for symbol, currency in self.currencies.items():
+                if symbol in value and not value[(value.rfind(symbol)-1)] in self._currency_ban_symbols:
+                    return currency
+
+        except Exception as e:
+            print(e)
+        
         return None
 
     def str_to_float(self, value = None) -> float:
@@ -194,11 +220,11 @@ class _Currency_Formatter():
 
         except ValueError:
             print(f"Currency Formatter: Unable to convert '{value}' to float")
-            return None
                     
         except Exception as e:
             print(e)
-            return None
+        
+        return None
 
     @_value_check
     def BRL(self, value = None, *, thousands_sep: str = '.',
