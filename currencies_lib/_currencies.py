@@ -35,8 +35,13 @@ class _Currency_Formatter():
             except ValueError:
                 print(f'Currency Formatter: The inputted value is not a Integer or a Float. ("{type(value)}")')
                 return None
-            function_exec = func(self, value, **kwargs)
-            return function_exec
+            
+            try:
+                function_exec = func(self, value, **kwargs)
+                return function_exec
+            except Exception as e:
+                print(e)
+            return
         return inner
 
     @_value_check
@@ -64,7 +69,7 @@ class _Currency_Formatter():
         return None
 
     @_value_check
-    def custom_format(self, value = None, *, currency_sign: str=None,
+    def custom_format(self, value = None, *, currency_symbol: str=None,
             sign_position: str='LEFT',
             thousands_sep: str=',', decimal_sep: str='.',
             custom_format=None) -> str:
@@ -103,10 +108,10 @@ class _Currency_Formatter():
 
             match sign_position:
                 case "RIGHT":
-                    final_value = f"{float(value):{custom_format}}{(" " + currency_sign) if currency_sign != None else ""}"
+                    final_value = f"{float(value):{custom_format}}{(" " + currency_symbol) if currency_symbol != None else ""}"
                     final_value = final_value.replace('.', decimal_sep).replace(f'{custom_format[:1]}', thousands_sep)
                 case "LEFT":
-                    final_value = f"{(currency_sign + " ") if currency_sign != None else ""}{float(value):{custom_format}}"
+                    final_value = f"{(currency_symbol + " ") if currency_symbol != None else ""}{float(value):{custom_format}}"
                     final_value = final_value.replace('.', decimal_sep).replace(f'{custom_format[:1]}', thousands_sep)
             
             return final_value
@@ -138,14 +143,14 @@ class _Currency_Formatter():
         return None
 
     @_value_check
-    def format_currency(self, value = None, *, currency_sign='',
+    def format_currency(self, value = None, *, currency_symbol='',
             sign_position='left', thousands_sep=',',
             decimal_sep='.', decimals=2):
         
         try:
             
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
-            if currency_sign:
+            if currency_symbol:
                 if sign_position in self.right_positions:
                     sign_position = "RIGHT"
                 elif sign_position in self.left_positions:
@@ -154,9 +159,9 @@ class _Currency_Formatter():
                     raise ReferenceError
                 match sign_position:
                     case 'LEFT':
-                        final_value = f"{currency_sign} {final_value}"
+                        final_value = f"{currency_symbol} {final_value}"
                     case 'RIGHT':
-                        final_value = f"{final_value} {currency_sign}"
+                        final_value = f"{final_value} {currency_symbol}"
 
             return final_value
         
@@ -186,13 +191,17 @@ class _Currency_Formatter():
     def str_to_float(self, value = None) -> float:
         # Can be imprecise
         try:
-            if value is None:
+            if not value:
                 raise ValueError("Currency Formatter: The value must be provided")
-            
-            if value.startswith('-'):
-                negative_num = True
-            else:
-                negative_num = False
+            __number_list = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+            for i, __none in enumerate(value):
+                if value[i] in __number_list:
+                    negative_num = False
+                    break
+
+                if value[i] == '-':
+                    negative_num = True
+                    break
 
             if any(char in value for char in self.symbols):
                 for char in self.symbols:
@@ -222,20 +231,20 @@ class _Currency_Formatter():
             print(f"Currency Formatter: Unable to convert '{value}' to float")
                     
         except Exception as e:
-            print(e)
+            print("Currency Formatter:", e)
         
         return None
 
     @_value_check
     def BRL(self, value = None, *, thousands_sep: str = '.',
             decimal_sep: str = ',',
-            currency_sign=False, decimals=2) -> str:
+            currency_symbol=False, decimals=2) -> str:
         # You can define the decimal places (default = 2)
         # You can define if you want the currency sign (default = False)
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
-            if currency_sign == True:
+            if currency_symbol == True:
                 final_value = f"R$ {final_value}"             
 
             return final_value
@@ -251,13 +260,13 @@ class _Currency_Formatter():
     @_value_check
     def USD(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.',
-            currency_sign=False, decimals=2) -> str:
+            currency_symbol=False, decimals=2) -> str:
         # You can define the decimal places (default = 2)
         # You can define if you want the currency sign (default = False)
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
-            if currency_sign == True:
+            if currency_symbol == True:
                 final_value = f"$ {final_value}"
 
             return final_value
@@ -273,7 +282,7 @@ class _Currency_Formatter():
     @_value_check
     def EUR(self, value = None, *, thousands_sep: str = '.',
             decimal_sep: str = ',', sign_position="LEFT",
-            currency_sign=False, eur_sign=False, decimals=2) -> str:
+            currency_symbol=False, eur_sign=False, decimals=2) -> str:
         # You can define the decimal places (default = 2)
         # You can define if you want the currency sign (default = False)
 
@@ -290,7 +299,7 @@ class _Currency_Formatter():
             else:
                 raise ReferenceError
 
-            if currency_sign == True:
+            if currency_symbol == True:
                 if eur_sign == True:
                     eur_sign = "€"
                 elif eur_sign == False:
@@ -320,7 +329,7 @@ class _Currency_Formatter():
     @_value_check
     def RUB(self, value = None, *, thousands_sep: str = ' ',
             decimal_sep: str = ',',
-            currency_sign=False, sign_position="LEFT", decimals=2) -> str:
+            currency_symbol=False, sign_position="LEFT", decimals=2) -> str:
         # You can define the decimal places (default = 2)
         # You can define if you want the currency sign (default = False)
 
@@ -337,7 +346,7 @@ class _Currency_Formatter():
             else:
                 raise ReferenceError
 
-            if currency_sign == True:
+            if currency_symbol == True:
                 match sign_position:
                     case "RIGHT":
                         final_value = f"{float(value):_.{decimals}f} ₽".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -359,13 +368,14 @@ class _Currency_Formatter():
 
         return None
     
+    @_value_check
     def GBP(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.',
-            currency_sign=False, decimals=2) -> str:
+            currency_symbol=False, decimals=2) -> str:
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
-            if currency_sign == True:
+            if currency_symbol == True:
                 final_value = f"£{final_value}"
 
             return final_value
@@ -378,12 +388,13 @@ class _Currency_Formatter():
 
         return None
 
+    @_value_check
     def JPY(self, value = None, *, thousands_sep: str = ',',
-            currency_sign=False) -> str:
+            currency_symbol=False) -> str:
 
         try:
             final_value = f"{float(value):_.0f}".replace('_', thousands_sep)
-            if currency_sign == True:
+            if currency_symbol == True:
                 final_value = f"¥{final_value}"
 
             return final_value
@@ -396,13 +407,14 @@ class _Currency_Formatter():
 
         return None
 
+    @_value_check
     def CAD(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.', spaced_sign=True,
-            currency_sign=False, cad_sign=True, decimals=2) -> str:
+            currency_symbol=False, cad_sign=True, decimals=2) -> str:
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
-            if currency_sign == True:
+            if currency_symbol == True:
                 match cad_sign:
                     case True:
                         cad_sign = "C$"
@@ -423,12 +435,13 @@ class _Currency_Formatter():
 
         return None
 
+    @_value_check
     def INR(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.',
-            currency_sign=None, decimals=2) -> str:
+            currency_symbol=None, decimals=2) -> str:
 
         try:
-            if value >= 100000 or value <= 100000:
+            if value >= 100000 or value <= -100000:
                 if str(value).startswith('-'):
                     negative_num = True
                     value = str(value)[1:]
@@ -448,13 +461,13 @@ class _Currency_Formatter():
                     ('-' if negative_num else '') + int_value +
                     (decimal_sep + dec_value if dec_value else decimal_sep +('0' * decimals))
                 )
-                if currency_sign:
+                if currency_symbol:
                     final_value = f'₹{final_value}'
                     
                 return final_value
 
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
-            if currency_sign:
+            if currency_symbol:
                 final_value = f'₹{final_value}'
 
             return final_value
