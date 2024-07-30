@@ -4,19 +4,19 @@ class _Currency_Formatter():
 
     def __init__(self):
         self.symbols = r" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz$£¢<>?!%&*(){}[]-=+~^|/"
-        self.unit_abbreviator_dict = {1_000: 'k', 1_000_000: 'M', 1_000_000_000: 'B', 1_000_000_000_000: 'T', 1_000_000_000_000_000: 'P'}
+        self.unit_abbreviator_dict = {1_000: 'k', 1_000_000: 'M', 1_000_000_000: 'B', 1_000_000_000_000: 'T'}
         self.right_positions = ["right", "r"]
         self.left_positions = ["left", "l"]
         self._currency_ban_symbols = r"ABCDEFGHIJKLMNOPQRSTUVWXYZ€₽£¥"
         self.currencies = {
-            '$': 'USD',
-            'R$': 'BRL',
-            '€': 'EUR',
-            '₽': 'RUB',
-            '£': 'GBP',
-            '¥': 'JPY',
-            'C$': 'CAD',
-            '₹': 'INR'
+            '$': 'USD',     'USD':'USD',
+            'R$': 'BRL',    'BRL':'BRL',
+            '€': 'EUR',     'EUR':'EUR',
+            '₽': 'RUB',     'RUB':'RUB',
+            '£': 'GBP',     'GBP':'GBP',
+            '¥': 'JPY',     'JPY':'JPY',
+            'C$': 'CAD',    'CAD':'CAD',
+            '₹': 'INR',     'INR':'INR'
         }
         
         # ex.: print(self.currency_link.format("usd"))
@@ -73,13 +73,7 @@ class _Currency_Formatter():
             sign_position: str='LEFT',
             thousands_sep: str=',', decimal_sep: str='.',
             custom_format=None) -> str:
-        
-        ''' esse módulo faz isso aqui
-        
-        >> pew pwew
-        - `aaha(a, b)` - hihihiha.
-        '''
-        
+
         if not custom_format:
             print(f'Currency Formatter: Format must be provided.')
             return None
@@ -148,7 +142,6 @@ class _Currency_Formatter():
             decimal_sep='.', decimals=2):
         
         try:
-            
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
             if currency_symbol:
                 if sign_position in self.right_positions:
@@ -159,9 +152,9 @@ class _Currency_Formatter():
                     raise ReferenceError
                 match sign_position:
                     case 'LEFT':
-                        final_value = f"{currency_symbol} {final_value}"
+                        final_value = f"{currency_symbol}{final_value}"
                     case 'RIGHT':
-                        final_value = f"{final_value} {currency_symbol}"
+                        final_value = f"{final_value}{currency_symbol}"
 
             return final_value
         
@@ -182,6 +175,10 @@ class _Currency_Formatter():
             for symbol, currency in self.currencies.items():
                 if symbol in value and not value[(value.rfind(symbol)-1)] in self._currency_ban_symbols:
                     return currency
+            raise RuntimeError
+
+        except RuntimeError:
+            print(f'Currency Formatter: Unable to detect the currency of "{value}"')
 
         except Exception as e:
             print(e)
