@@ -122,8 +122,9 @@ class _Currency_Formatter():
         return None
    
     @_value_check
-    def unit_abbreviator(self, value, decimals=1) -> str:
+    def unit_abbreviator(self, value:float = None, decimals=1) -> str:
         # 1000 as > 1k || 1000000 as > 1M
+        
         try:
             for divisor, suffix in sorted(self.unit_abbreviator_dict.items(), reverse=True):
                 if abs(value) >= divisor:
@@ -137,9 +138,9 @@ class _Currency_Formatter():
         return None
 
     @_value_check
-    def format_currency(self, value = None, *, currency_symbol='',
-            sign_position='left', thousands_sep=',',
-            decimal_sep='.', decimals=2):
+    def format_currency(self, value: float = None, *, currency_symbol:str ='',
+            sign_position:str ='left', thousands_sep:str =',',
+            decimal_sep: str ='.', decimals:int =2) -> str:
         
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -169,9 +170,11 @@ class _Currency_Formatter():
 
         return None
 
-    def detect_currency(self, value):
+    def detect_currency(self, value:str = None):
         # Can be imprecise. Needs more tests
         try:
+            if not value:
+                raise ValueError("Currency Formatter: The value must be provided")
             for symbol, currency in self.currencies.items():
                 if symbol in value and not value[(value.rfind(symbol)-1)] in self._currency_ban_symbols:
                     return currency
@@ -185,7 +188,7 @@ class _Currency_Formatter():
         
         return None
 
-    def str_to_float(self, value = None) -> float:
+    def str_to_float(self, value:str = None) -> float:
         # Can be imprecise
         try:
             if not value:
