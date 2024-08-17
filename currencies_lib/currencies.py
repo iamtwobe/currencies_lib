@@ -1,14 +1,46 @@
 from functools import wraps
 
-class _Currency_Formatter():
+class Currency_Formatter():
+    """This module handles values and formats them accordingly.
+
+    ---
+
+    #### General formatters:
+    - `str_to_float(value)`: Converts a string value to a float.
+    - `as_percentage(value, percentage)`: Formats a value as or with a percentage.
+    - `unit_abbreviator(value)`: Abbreviates a value with a unit. (ex.: 1k)
+    - `format_currency(value, **kwargs)`: Formats a value with a custom currency.
+    - `detect_currency(value)`: Detects the currency from a string.
+
+    ---
+
+    #### The currency formatter work as the following:
+    - `Currency(value)`: Formats a value with a currency.
+    - ex.: USD(1000) -> 1,000.00
+
+    #### The module can handle the following currencies:
+    - `BRL` | `USD` | `EUR` | `RUB` | `GBP` | `JPY` | `CAD` | `INR`
+
+    ---
+
+    Example usage:
+    ```python
+    from currencies_lib import Currency_Formatter, USD
+
+    value = 1000.50
+    _ = Currency_Formatter.USD(value, currency_symbol=True)# Output: $ 1,000.50
+    # Or
+    _ = USD(value, currency_symbol=True)# Output: $ 1,000.50
+    ```
+    """
 
     def __init__(self):
-        self.symbols = r" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz$£¢<>?!%&*(){}[]-=+~^|/"
-        self.unit_abbreviator_dict = {1_000: 'k', 1_000_000: 'M', 1_000_000_000: 'B', 1_000_000_000_000: 'T'}
-        self.right_positions = ["right", "r"]
-        self.left_positions = ["left", "l"]
+        self._symbols = r" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz$£¢<>?!%&*(){}[]-=+~^|/"
+        self._unit_abbreviator_dict = {1_000: 'k', 1_000_000: 'M', 1_000_000_000: 'B', 1_000_000_000_000: 'T'}
+        self._right_positions = ["right", "r"]
+        self._left_positions = ["left", "l"]
         self._currency_ban_symbols = r"ABCDEFGHIJKLMNOPQRSTUVWXYZ€₽£¥"
-        self.currencies = {
+        self._currencies = {
             '$': 'USD',     'USD':'USD',
             'R$': 'BRL',    'BRL':'BRL',
             '€': 'EUR',     'EUR':'EUR',
@@ -18,8 +50,6 @@ class _Currency_Formatter():
             'C$': 'CAD',    'CAD':'CAD',
             '₹': 'INR',     'INR':'INR'
         }
-        
-        # ex.: print(self.currency_link.format("usd"))
 
     def _value_check(func):
         @wraps(func)
@@ -73,7 +103,7 @@ class _Currency_Formatter():
             sign_position: str='LEFT',
             thousands_sep: str=',', decimal_sep: str='.',
             custom_format=None) -> str:
-
+        """Not recommended"""
         if not custom_format:
             print(f'Currency Formatter: Format must be provided.')
             return None
@@ -89,13 +119,13 @@ class _Currency_Formatter():
         
         try:
             sign_position = sign_position.lower()
-            if sign_position not in self.right_positions and sign_position not in self.left_positions:
+            if sign_position not in self._right_positions and sign_position not in self._left_positions:
                 print(f'Currency Formatter: Invalid sign_position inputted. ("{sign_position}")')
                 return None
             
-            if sign_position in self.right_positions:
+            if sign_position in self._right_positions:
                 sign_position = "RIGHT"
-            elif sign_position in self.left_positions:
+            elif sign_position in self._left_positions:
                 sign_position = "LEFT"
             else:
                 raise ReferenceError
@@ -126,7 +156,7 @@ class _Currency_Formatter():
         # 1000 as > 1k || 1000000 as > 1M
         
         try:
-            for divisor, suffix in sorted(self.unit_abbreviator_dict.items(), reverse=True):
+            for divisor, suffix in sorted(self._unit_abbreviator_dict.items(), reverse=True):
                 if abs(value) >= divisor:
                     abbreviated_value = value / divisor
                     return f"{abbreviated_value:.{decimals}f}{suffix}"
@@ -145,9 +175,9 @@ class _Currency_Formatter():
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
             if currency_symbol:
-                if sign_position in self.right_positions:
+                if sign_position in self._right_positions:
                     sign_position = "RIGHT"
-                elif sign_position in self.left_positions:
+                elif sign_position in self._left_positions:
                     sign_position = "LEFT"
                 else:
                     raise ReferenceError
@@ -175,7 +205,7 @@ class _Currency_Formatter():
         try:
             if not value:
                 raise ValueError("Currency Formatter: The value must be provided")
-            for symbol, currency in self.currencies.items():
+            for symbol, currency in self._currencies.items():
                 if symbol in value and not value[(value.rfind(symbol)-1)] in self._currency_ban_symbols:
                     return currency
             raise RuntimeError
@@ -203,8 +233,8 @@ class _Currency_Formatter():
                     negative_num = True
                     break
 
-            if any(char in value for char in self.symbols):
-                for char in self.symbols:
+            if any(char in value for char in self._symbols):
+                for char in self._symbols:
                     value = value.replace(char, '')
 
             if ',' in value and '.' in value:
@@ -288,13 +318,13 @@ class _Currency_Formatter():
 
         try:
             sign_position = sign_position.lower()
-            if sign_position not in self.right_positions and sign_position not in self.left_positions:
+            if sign_position not in self._right_positions and sign_position not in self._left_positions:
                 print(f'Currency Formatter: Invalid sign_position inputted. ("{sign_position}")')
                 return None
             
-            if sign_position in self.right_positions:
+            if sign_position in self._right_positions:
                 sign_position = "RIGHT"
-            elif sign_position in self.left_positions:
+            elif sign_position in self._left_positions:
                 sign_position = "LEFT"
             else:
                 raise ReferenceError
@@ -335,13 +365,13 @@ class _Currency_Formatter():
 
         try:
             sign_position = sign_position.lower()
-            if sign_position not in self.right_positions and sign_position not in self.left_positions:
+            if sign_position not in self._right_positions and sign_position not in self._left_positions:
                 print(f'Currency Formatter: Invalid sign_position inputted. ("{sign_position}")')
                 return None
             
-            if sign_position in self.right_positions:
+            if sign_position in self._right_positions:
                 sign_position = "RIGHT"
-            elif sign_position in self.left_positions:
+            elif sign_position in self._left_positions:
                 sign_position = "LEFT"
             else:
                 raise ReferenceError
