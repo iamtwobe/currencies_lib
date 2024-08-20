@@ -3,25 +3,22 @@ from .currencies import Currency_Formatter
 __version__ = "0.6"
 
 
-## Was thinking about using, but performance gets low
-# for item in dir(Currency_Formatter):
-#     if not item.startswith('_'):
-#         globals()[item] = getattr(Currency_Formatter, item)
-
 
 #// ----> Function imports <---- \\
-
+Currency_Formatter = Currency_Formatter()
+    
 str_to_float = Currency_Formatter.str_to_float
 as_percentage = Currency_Formatter.as_percentage
 unit_abbreviator = Currency_Formatter.unit_abbreviator
 format_currency = Currency_Formatter.format_currency
 detect_currency = Currency_Formatter.detect_currency
 custom_format = Currency_Formatter.custom_format
-BRL = Currency_Formatter.BRL
-USD = Currency_Formatter.USD
-EUR = Currency_Formatter.EUR
-RUB = Currency_Formatter.RUB
-GBP = Currency_Formatter.GBP
-JPY = Currency_Formatter.JPY
-CAD = Currency_Formatter.CAD
-INR = Currency_Formatter.INR
+(
+    BRL, USD, EUR, RUB, GBP, JPY, CAD, INR, AUD, CHF,
+    CNY, NZD, MXN, SGD, SEK, NOK, PLN, TRY, HKD, ILS, 
+    KRW, RMB, COP, ARS
+) = (getattr(Currency_Formatter, currency) for currency in [
+    'BRL', 'USD', 'EUR', 'RUB', 'GBP', 'JPY', 'CAD', 'INR',
+    'AUD', 'CHF', 'CNY', 'NZD', 'MXN', 'SGD', 'SEK', 'NOK',
+    'PLN', 'TRY', 'HKD', 'ILS', 'KRW', 'RMB', 'COP', 'ARS'
+])
