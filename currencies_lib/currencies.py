@@ -19,7 +19,10 @@ class Currency_Formatter():
     - ex.: USD(1000) -> 1,000.00
 
     #### The module can handle the following currencies:
-    - `BRL` | `USD` | `EUR` | `RUB` | `GBP` | `JPY` | `CAD` | `INR`
+    - `BRL` | `USD` | `EUR` | `RUB` | `GBP` | `JPY` | `CAD` | `INR` | `AUD` 
+    | `CHF` | `CNY` | `NZD` | `MXN` | `SGD` | `SEK` | `NOK` | `PLN` | `TRY` 
+    | `HKD` | `ILS` | `KRW` | `RMB` | `COP` | `ARS` | `AED` | `ZAR` | `THB` 
+    | `SAR`
 
     ---
 
@@ -925,6 +928,148 @@ class Currency_Formatter():
                         final_value = f"{float(value):_.{decimals}f} {ars_sign}".replace('.', decimal_sep).replace('_', thousands_sep)
                     case "LEFT":
                         final_value = f"{ars_sign} {float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+            else:
+                final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+        
+        except ReferenceError:
+            print(f'Currency Formatter: The inputted position is not valid. Must be left or right. ("{sign_position}")')
+
+        except Exception as e:
+            print(e)
+
+        return None
+
+    def AED(self, value = None, *, thousands_sep: str = '.',
+            decimal_sep: str = ',', sign_position="LEFT",
+            currency_symbol=False, aed_sign=False, decimals=2) -> str:
+        # You can define the decimal places (default = 2)
+        # You can define if you want the currency sign (default = False)
+
+        try:
+            sign_position = sign_position.lower()
+            if sign_position not in self._right_positions and sign_position not in self._left_positions:
+                print(f'Currency Formatter: Invalid sign_position inputted. ("{sign_position}")')
+                return None
+            
+            if sign_position in self._right_positions:
+                sign_position = "RIGHT"
+            elif sign_position in self._left_positions:
+                sign_position = "LEFT"
+            else:
+                raise ReferenceError
+
+            if currency_symbol == True:
+                if aed_sign == True:
+                    aed_sign = "د.إ"
+                elif aed_sign == False:
+                    aed_sign = "AED"
+
+                match sign_position:
+                    case "RIGHT":
+                        final_value = f"{float(value):_.{decimals}f}{aed_sign}".replace('.', decimal_sep).replace('_', thousands_sep)
+                    case "LEFT":
+                        final_value = f"{aed_sign}{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+            else:
+                final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+        
+        except ReferenceError:
+            print(f'Currency Formatter: The inputted position is not valid. Must be left or right. ("{sign_position}")')
+
+        except Exception as e:
+            print(e)
+
+        return None
+
+    def ZAR(self, value = None, *, thousands_sep: str = ',',
+            decimal_sep: str = '.',
+            currency_symbol=False, zar_sign=True, decimals=2) -> str:
+
+        try:
+            final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+            if currency_symbol == True:
+                match zar_sign:
+                    case True:
+                        zar_sign = "R"
+                    case False:
+                        zar_sign = "ZAR"
+
+                final_value = f"{zar_sign}{final_value}"
+                
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+        
+        except Exception as e:
+            print(e)
+
+        return None
+    
+    def THB(self, value = None, *, thousands_sep: str = ',',
+            decimal_sep: str = '.',
+            currency_symbol=False, thb_sign=True, decimals=2) -> str:
+
+        try:
+            final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+            if currency_symbol == True:
+                match thb_sign:
+                    case True:
+                        thb_sign = "฿"
+                    case False:
+                        thb_sign = "THB"
+
+                final_value = f"{thb_sign}{final_value}"
+                
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+        
+        except Exception as e:
+            print(e)
+
+        return None
+
+    def SAR(self, value = None, *, thousands_sep: str = '.',
+            decimal_sep: str = ',', sign_position="LEFT",
+            currency_symbol=False, sar_sign=False, decimals=2) -> str:
+        # You can define the decimal places (default = 2)
+        # You can define if you want the currency sign (default = False)
+
+        try:
+            sign_position = sign_position.lower()
+            if sign_position not in self._right_positions and sign_position not in self._left_positions:
+                print(f'Currency Formatter: Invalid sign_position inputted. ("{sign_position}")')
+                return None
+            
+            if sign_position in self._right_positions:
+                sign_position = "RIGHT"
+            elif sign_position in self._left_positions:
+                sign_position = "LEFT"
+            else:
+                raise ReferenceError
+
+            if currency_symbol == True:
+                if sar_sign == True:
+                    sar_sign = "ر.س"
+                elif sar_sign == False:
+                    sar_sign = "SAR"
+
+                match sign_position:
+                    case "RIGHT":
+                        final_value = f"{float(value):_.{decimals}f}{sar_sign}".replace('.', decimal_sep).replace('_', thousands_sep)
+                    case "LEFT":
+                        final_value = f"{sar_sign}{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
             else:
                 final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
 

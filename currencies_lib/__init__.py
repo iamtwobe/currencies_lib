@@ -16,9 +16,10 @@ custom_format = Currency_Formatter.custom_format
 (
     BRL, USD, EUR, RUB, GBP, JPY, CAD, INR, AUD, CHF,
     CNY, NZD, MXN, SGD, SEK, NOK, PLN, TRY, HKD, ILS, 
-    KRW, RMB, COP, ARS
+    KRW, RMB, COP, ARS, AED, ZAR, THB, SAR
 ) = (getattr(Currency_Formatter, currency) for currency in [
     'BRL', 'USD', 'EUR', 'RUB', 'GBP', 'JPY', 'CAD', 'INR',
     'AUD', 'CHF', 'CNY', 'NZD', 'MXN', 'SGD', 'SEK', 'NOK',
-    'PLN', 'TRY', 'HKD', 'ILS', 'KRW', 'RMB', 'COP', 'ARS'
+    'PLN', 'TRY', 'HKD', 'ILS', 'KRW', 'RMB', 'COP', 'ARS',
+    'AED', 'ZAR', 'THB', 'SAR'
 ])
