@@ -318,8 +318,16 @@ class Currency_Formatter():
     def BRL(self, value = None, *, thousands_sep: str = '.',
             decimal_sep: str = ',',
             currency_symbol=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to Brazilian Real (BRL)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default '.'
+        -    `decimal_sep` (str): Separator for decimal places, by default ','
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -340,8 +348,16 @@ class Currency_Formatter():
     def USD(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.',
             currency_symbol=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to United States Dollar (USD)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ','
+        -    `decimal_sep` (str): Separator for decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -362,8 +378,18 @@ class Currency_Formatter():
     def EUR(self, value = None, *, thousands_sep: str = '.',
             decimal_sep: str = ',', sign_position="LEFT",
             currency_symbol=False, eur_sign=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to Euro (EUR)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default '.'
+        -    `decimal_sep` (str): Separator for decimal places, by default ','
+        -    `sign_position` (str): Defines the position for the currency_symbol, by default "left"
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `eur_sign` (bool): Defines if the € sign is shown, by default False 
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             sign_position = sign_position.lower()
@@ -409,8 +435,17 @@ class Currency_Formatter():
     def RUB(self, value = None, *, thousands_sep: str = ' ',
             decimal_sep: str = ',',
             currency_symbol=False, sign_position="LEFT", decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to Russian Ruble (RUB)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ' '
+        -    `decimal_sep` (str): Separator for decimal places, by default ','
+        -    `sign_position` (str): Defines the position for the currency_symbol, by default "left"
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             sign_position = sign_position.lower()
@@ -451,6 +486,16 @@ class Currency_Formatter():
     def GBP(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.',
             currency_symbol=False, decimals=2) -> str:
+        """Formats a value to British Pound (GBP)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ','
+        -    `decimal_sep` (str): Separator for decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -470,6 +515,14 @@ class Currency_Formatter():
     @_value_check
     def JPY(self, value = None, *, thousands_sep: str = ',',
             currency_symbol=False) -> str:
+        """Formats a value to Japanese Yen (JPY)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ','
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        """
 
         try:
             final_value = f"{float(value):_.0f}".replace('_', thousands_sep)
@@ -490,6 +543,18 @@ class Currency_Formatter():
     def CAD(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.', spaced_sign=True,
             currency_symbol=False, cad_sign=True, decimals=2) -> str:
+        """Formats a value to Canadian Dollar (CAD)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ','
+        -    `decimal_sep` (str): Separator for decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency symbol is shown, by default False
+        -    `cad_sign` (bool): Defines if the C$ sign is shown, by default False
+        -    `spaced_sign` (bool): Defines if the sign will have a space after it, by default True
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -517,7 +582,17 @@ class Currency_Formatter():
     @_value_check
     def INR(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.',
-            currency_symbol=None, decimals=2) -> str:
+            currency_symbol=False, decimals=2) -> str:
+        """Formats a value to Indian Rupee (INR)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ','
+        -    `decimal_sep` (str): Separator for decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             if value >= 100000 or value <= -100000:
@@ -563,8 +638,16 @@ class Currency_Formatter():
     def AUD(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.',
             currency_symbol=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to Australian Dollar (AUD)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ','
+        -    `decimal_sep` (str): Separator for decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -585,6 +668,17 @@ class Currency_Formatter():
     def CHF(self, value = None, *, thousands_sep: str = "'",
             decimal_sep: str = '.',
             currency_symbol=False, currency_sign=True, decimals=2) -> str:
+        """Formats a value to Swiss Franc (CHF)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default "'"
+        -    `decimal_sep` (str): Separator for decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `currency_sign` (bool): Defines if the ₣ sign is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -611,8 +705,16 @@ class Currency_Formatter():
     def CNY(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.',
             currency_symbol=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to Chinese Yuan (CNY)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ','
+        -    `decimal_sep` (str): Separator for decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -633,8 +735,16 @@ class Currency_Formatter():
     def NZD(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.',
             currency_symbol=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to New Zealand Dollar (NZD)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ','
+        -    `decimal_sep` (str): Separator for decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -654,9 +764,19 @@ class Currency_Formatter():
     @_value_check
     def MXN(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.', sign_position="LEFT",
-            currency_symbol=False, mxn_sign=True, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+            currency_symbol=False, mxn_sign=False, decimals=2) -> str:
+        """Formats a value to Mexican Peso (MXN)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ','
+        -    `decimal_sep` (str): Separator for decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `sign_position` (str): Defines the position for the currency_symbol, by default "left"
+        -    `mxn_sign` (bool): Defines if the MX$ sign is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             sign_position = sign_position.lower()
@@ -673,9 +793,9 @@ class Currency_Formatter():
 
             if currency_symbol == True:
                 if mxn_sign == True:
-                    mxn_sign = "$"
-                elif mxn_sign == False:
                     mxn_sign = "MX$"
+                elif mxn_sign == False:
+                    mxn_sign = "$"
 
                 match sign_position:
                     case "RIGHT":
@@ -702,8 +822,16 @@ class Currency_Formatter():
     def SGD(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.',
             currency_symbol=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to Singapore Dollar (SGD)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ','
+        -    `decimal_sep` (str): Separator for decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -724,8 +852,16 @@ class Currency_Formatter():
     def SEK(self, value = None, *, thousands_sep: str = '.',
             decimal_sep: str = ',',
             currency_symbol=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to Swedish Krona (SEK)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default '.'
+        -    `decimal_sep` (str): Separator for decimal places, by default ','
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -746,8 +882,16 @@ class Currency_Formatter():
     def NOK(self, value = None, *, thousands_sep: str = '.',
             decimal_sep: str = ',',
             currency_symbol=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to Norwegian Krona (NOK)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default '.'
+        -    `decimal_sep` (str): Separator for decimal places, by default ','
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -768,8 +912,16 @@ class Currency_Formatter():
     def DKK(self, value = None, *, thousands_sep: str = '.',
             decimal_sep: str = ',',
             currency_symbol=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to Danish Krona (DKK)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default '.'
+        -    `decimal_sep` (str): Separator for decimal places, by default ','
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -790,8 +942,16 @@ class Currency_Formatter():
     def PLN(self, value = None, *, thousands_sep: str = '.',
             decimal_sep: str = ',',
             currency_symbol=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to Polish Zloty (PLN)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default '.'
+        -    `decimal_sep` (str): Separator for decimal places, by default ','
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -812,8 +972,16 @@ class Currency_Formatter():
     def TRY(self, value = None, *, thousands_sep: str = '.',
             decimal_sep: str = ',',
             currency_symbol=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to Turkish Lira (TRY)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default '.'
+        -    `decimal_sep` (str): Separator for decimal places, by default ','
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -834,8 +1002,16 @@ class Currency_Formatter():
     def HKD(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.',
             currency_symbol=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to Hong Kong Dollar (HKD)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ','
+        -    `decimal_sep` (str): Separator for decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -856,8 +1032,16 @@ class Currency_Formatter():
     def ILS(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.',
             currency_symbol=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to Israeli New Shekel (ILS)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ','
+        -    `decimal_sep` (str): Separator for decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -877,6 +1061,14 @@ class Currency_Formatter():
     @_value_check
     def KRW(self, value = None, *, thousands_sep: str = ',',
             currency_symbol=False) -> str:
+        """Formats a value to South Korean Won (KRW)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        """
 
         try:
             final_value = f"{float(value):_.0f}".replace('_', thousands_sep)
@@ -897,8 +1089,16 @@ class Currency_Formatter():
     def RMB(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.',
             currency_symbol=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to Chinese Yuan (RMB)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ','
+        -    `decimal_sep` (str): Separator for decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -919,8 +1119,18 @@ class Currency_Formatter():
     def COP(self, value = None, *, thousands_sep: str = '.',
             decimal_sep: str = ',', sign_position="LEFT",
             currency_symbol=False, cop_sign=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to Colombian Peso (COP)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default '.'
+        -    `decimal_sep` (str): Separator for decimal places, by default ','
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `sign_position` (str): Defines the position for the currency_symbol, by default "left"
+        -    `cop_sign` (bool): Defines if the 'COP' sign is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             sign_position = sign_position.lower()
@@ -937,9 +1147,9 @@ class Currency_Formatter():
 
             if currency_symbol == True:
                 if cop_sign == True:
-                    cop_sign = "$"
-                elif cop_sign == False:
                     cop_sign = "COP"
+                elif cop_sign == False:
+                    cop_sign = "$"
 
                 match sign_position:
                     case "RIGHT":
@@ -966,8 +1176,18 @@ class Currency_Formatter():
     def ARS(self, value = None, *, thousands_sep: str = '.',
             decimal_sep: str = ',', sign_position="LEFT",
             currency_symbol=False, ars_sign=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to Argentine Peso (ARS)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default '.'
+        -    `decimal_sep` (str): Separator for decimal places, by default ','
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `sign_position` (str): Defines the position for the currency_symbol, by default "left"
+        -    `ars_sign` (bool): Defines if the AR$ sign is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             sign_position = sign_position.lower()
@@ -984,9 +1204,9 @@ class Currency_Formatter():
 
             if currency_symbol == True:
                 if ars_sign == True:
-                    ars_sign = "$"
-                elif ars_sign == False:
                     ars_sign = "AR$"
+                elif ars_sign == False:
+                    ars_sign = "$"
 
                 match sign_position:
                     case "RIGHT":
@@ -1012,8 +1232,18 @@ class Currency_Formatter():
     def AED(self, value = None, *, thousands_sep: str = '.',
             decimal_sep: str = ',', sign_position="LEFT",
             currency_symbol=False, aed_sign=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to United Arab Emirates Dirham (AED)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default '.'
+        -    `decimal_sep` (str): Separator for decimal places, by default ','
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `sign_position` (str): Defines the position for the currency_symbol, by default "left"
+        -    `aed_sign` (bool): Defines if the "د.إ" sign is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             sign_position = sign_position.lower()
@@ -1057,7 +1287,18 @@ class Currency_Formatter():
 
     def ZAR(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.',
-            currency_symbol=False, zar_sign=True, decimals=2) -> str:
+            currency_symbol=False, zar_sign=False, decimals=2) -> str:
+        """Formats a value to South African Rand (ZAR)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ','
+        -    `decimal_sep` (str): Separator for decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `zar_sign` (bool): Defines if the R sign is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -1082,7 +1323,18 @@ class Currency_Formatter():
     
     def THB(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.',
-            currency_symbol=False, thb_sign=True, decimals=2) -> str:
+            currency_symbol=False, thb_sign=False, decimals=2) -> str:
+        """Formats a value to Thai Baht (THB)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ','
+        -    `decimal_sep` (str): Separator for decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `thb_sign` (bool): Defines if the ฿ sign is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -1108,8 +1360,18 @@ class Currency_Formatter():
     def SAR(self, value = None, *, thousands_sep: str = '.',
             decimal_sep: str = ',', sign_position="LEFT",
             currency_symbol=False, sar_sign=False, decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to Saudi Riyal (SAR)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default '.'
+        -    `decimal_sep` (str): Separator for decimal places, by default ','
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `sign_position` (str): Defines the position for the currency_symbol, by default "left"
+        -    `CUR_sign` (bool): Defines if the "ر.س" sign is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             sign_position = sign_position.lower()
@@ -1155,7 +1417,18 @@ class Currency_Formatter():
     @_value_check
     def XCD(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.', currency_symbol=False,
-            xcd_sign=True, decimals=2) -> str:
+            xcd_sign=False, decimals=2) -> str:
+        """Formats a value to East Caribbean Dollar (XCD)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ','
+        -    `decimal_sep` (str): Separator for decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `xcd_sign` (bool): Defines if the EC$ sign is shown, by default False
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -1181,6 +1454,14 @@ class Currency_Formatter():
     @_value_check
     def XOF(self, value = None, *, thousands_sep: str = ',',
             currency_symbol=False) -> str:
+        """Formats a value to West African CFA Franc (XOF)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ','
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        """
 
         try:
             final_value = f"{float(value):_.0f}".replace('_', thousands_sep)
@@ -1200,6 +1481,14 @@ class Currency_Formatter():
     @_value_check
     def XAF(self, value = None, *, thousands_sep: str = ',',
             currency_symbol=False) -> str:
+        """Formats a value to CURRENCY
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        """
 
         try:
             final_value = f"{float(value):_.0f}".replace('_', thousands_sep)
@@ -1219,8 +1508,15 @@ class Currency_Formatter():
     @_value_check
     def XPF(self, value = None, *, thousands_sep: str = ',',
             currency_symbol=False, sign_position="LEFT") -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+        """Formats a value to CURRENCY
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `sign_position` (str): Defines the position for the currency_symbol, by default "left"
+        """
 
         try:
             sign_position = sign_position.lower()
@@ -1261,6 +1557,19 @@ class Currency_Formatter():
     def DZD(self, value = None, *, thousands_sep: str = ',',
             decimal_sep: str = '.', spaced_sign=True,
             currency_symbol=False, dzd_sign=True, decimals=2) -> str:
+        """Formats a value to Algerian Dinar (DZD)
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default ','
+        -    `decimal_sep` (str): Separator for decimal places, by default '.'
+        -    `currency_symbol` (bool): Defines if the currency_symbol is shown, by default False
+        -    `sign_position` (str): Defines the position for the currency_symbol, by default "left"
+        -    `dzd_sign` (bool): Defines if the "دج" sign is shown, by default False
+        -    `spaced_sign` (bool): Defines if the sign will have a space after it, by default True
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
