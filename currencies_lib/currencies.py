@@ -1266,9 +1266,9 @@ class Currency_Formatter():
 
                 match sign_position:
                     case "RIGHT":
-                        final_value = f"{float(value):_.{decimals}f}{aed_sign}".replace('.', decimal_sep).replace('_', thousands_sep)
+                        final_value = f"{float(value):_.{decimals}f} {aed_sign}".replace('.', decimal_sep).replace('_', thousands_sep)
                     case "LEFT":
-                        final_value = f"{aed_sign}{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+                        final_value = f"{aed_sign} {float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
             else:
                 final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
 
@@ -1394,9 +1394,9 @@ class Currency_Formatter():
 
                 match sign_position:
                     case "RIGHT":
-                        final_value = f"{float(value):_.{decimals}f}{sar_sign}".replace('.', decimal_sep).replace('_', thousands_sep)
+                        final_value = f"{float(value):_.{decimals}f} {sar_sign}".replace('.', decimal_sep).replace('_', thousands_sep)
                     case "LEFT":
-                        final_value = f"{sar_sign}{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+                        final_value = f"{sar_sign} {float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
             else:
                 final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
 
