@@ -11,6 +11,7 @@ class Currency_Formatter():
     - `unit_abbreviator(value)`: Abbreviates a value with a unit. (ex.: 1k)
     - `format_currency(value, **kwargs)`: Formats a value with a custom currency.
     - `detect_currency(value)`: Detects the currency from a string.
+    - `unspecified_currency(value)`: Formats a value with an generic currency symbol ( ¤ )
 
     ---
 
@@ -22,7 +23,7 @@ class Currency_Formatter():
     - `BRL` | `USD` | `EUR` | `RUB` | `GBP` | `JPY` | `CAD` | `INR` | `AUD` 
     | `CHF` | `CNY` | `NZD` | `MXN` | `SGD` | `SEK` | `NOK` | `PLN` | `TRY` 
     | `HKD` | `ILS` | `KRW` | `RMB` | `COP` | `ARS` | `AED` | `ZAR` | `THB` 
-    | `SAR`
+    | `SAR` | `DZD` | `XPF` | `XAF` | `XOF` | `XCD` | `...`
 
     ---
 
@@ -196,7 +197,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except ReferenceError:
             print(f'Currency Formatter: The inputted position is not valid. Must be left or right. ("{sign_position}")')
@@ -272,6 +273,48 @@ class Currency_Formatter():
         return None
 
     @_value_check
+    def unspecified_currency(self, value = None, *, thousands_sep: str = '.',
+            decimal_sep: str = ',',
+            currency_symbol=True, sign_position="LEFT", decimals=2) -> str:
+        # You can define the decimal places (default = 2)
+        # You can define if you want the currency sign (default = False)
+
+        try:
+            sign_position = sign_position.lower()
+            if sign_position not in self._right_positions and sign_position not in self._left_positions:
+                print(f'Currency Formatter: Invalid sign_position inputted. ("{sign_position}")')
+                return None
+            
+            if sign_position in self._right_positions:
+                sign_position = "RIGHT"
+            elif sign_position in self._left_positions:
+                sign_position = "LEFT"
+            else:
+                raise ReferenceError
+
+            if currency_symbol == True:
+                match sign_position:
+                    case "RIGHT":
+                        final_value = f"{float(value):_.{decimals}f} ¤".replace('.', decimal_sep).replace('_', thousands_sep)
+                    case "LEFT":
+                        final_value = f"¤ {float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+            else:
+                final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
+        
+        except ReferenceError:
+            print(f'Currency Formatter: The inputted position is not valid. Must be left or right. ("{sign_position}")')
+
+        except Exception as e:
+            print(e)
+
+        return None
+
+    @_value_check
     def BRL(self, value = None, *, thousands_sep: str = '.',
             decimal_sep: str = ',',
             currency_symbol=False, decimals=2) -> str:
@@ -286,7 +329,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except Exception as e:
             print(e)
@@ -308,7 +351,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except Exception as e:
             print(e)
@@ -352,7 +395,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except ReferenceError:
             print(f'Currency Formatter: The inputted position is not valid. Must be left or right. ("{sign_position}")')
@@ -394,7 +437,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except ReferenceError:
             print(f'Currency Formatter: The inputted position is not valid. Must be left or right. ("{sign_position}")')
@@ -417,7 +460,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except Exception as e:
             print(e)
@@ -464,7 +507,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except Exception as e:
             print(e)
@@ -531,7 +574,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except Exception as e:
             print(e)
@@ -557,7 +600,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except Exception as e:
             print(e)
@@ -579,7 +622,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except Exception as e:
             print(e)
@@ -601,7 +644,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except Exception as e:
             print(e)
@@ -645,7 +688,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except ReferenceError:
             print(f'Currency Formatter: The inputted position is not valid. Must be left or right. ("{sign_position}")')
@@ -670,7 +713,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except Exception as e:
             print(e)
@@ -692,7 +735,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except Exception as e:
             print(e)
@@ -714,7 +757,29 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
+        
+        except Exception as e:
+            print(e)
+
+        return None
+    
+    @_value_check
+    def DKK(self, value = None, *, thousands_sep: str = '.',
+            decimal_sep: str = ',',
+            currency_symbol=False, decimals=2) -> str:
+        # You can define the decimal places (default = 2)
+        # You can define if you want the currency sign (default = False)
+
+        try:
+            final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+            if currency_symbol == True:
+                final_value = f"{final_value} kr"
+
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except Exception as e:
             print(e)
@@ -736,7 +801,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except Exception as e:
             print(e)
@@ -758,7 +823,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except Exception as e:
             print(e)
@@ -780,7 +845,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except Exception as e:
             print(e)
@@ -802,7 +867,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except Exception as e:
             print(e)
@@ -843,7 +908,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except Exception as e:
             print(e)
@@ -887,7 +952,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except ReferenceError:
             print(f'Currency Formatter: The inputted position is not valid. Must be left or right. ("{sign_position}")')
@@ -934,7 +999,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except ReferenceError:
             print(f'Currency Formatter: The inputted position is not valid. Must be left or right. ("{sign_position}")')
@@ -980,7 +1045,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except ReferenceError:
             print(f'Currency Formatter: The inputted position is not valid. Must be left or right. ("{sign_position}")')
@@ -1008,7 +1073,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except Exception as e:
             print(e)
@@ -1033,7 +1098,7 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except Exception as e:
             print(e)
@@ -1076,11 +1141,145 @@ class Currency_Formatter():
             return final_value
         
         except TypeError:
-            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if type(thousands_sep) != str else decimal_sep}")')
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
         
         except ReferenceError:
             print(f'Currency Formatter: The inputted position is not valid. Must be left or right. ("{sign_position}")')
 
+        except Exception as e:
+            print(e)
+
+        return None
+
+    # Dois padrões de moeda e 1 posição
+    @_value_check
+    def XCD(self, value = None, *, thousands_sep: str = ',',
+            decimal_sep: str = '.', currency_symbol=False,
+            xcd_sign=True, decimals=2) -> str:
+
+        try:
+            final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+            if currency_symbol == True:
+                match xcd_sign:
+                    case True:
+                        xcd_sign = "EC$"
+                    case False:
+                        xcd_sign = "$"
+
+                final_value = f"{xcd_sign}{final_value}"
+                
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
+        
+        except Exception as e:
+            print(e)
+
+        return None
+    
+    @_value_check
+    def XOF(self, value = None, *, thousands_sep: str = ',',
+            currency_symbol=False) -> str:
+
+        try:
+            final_value = f"{float(value):_.0f}".replace('_', thousands_sep)
+            if currency_symbol == True:
+                final_value = f"{final_value} CFA"
+
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep}")')
+        
+        except Exception as e:
+            print(e)
+
+        return None
+
+    @_value_check
+    def XAF(self, value = None, *, thousands_sep: str = ',',
+            currency_symbol=False) -> str:
+
+        try:
+            final_value = f"{float(value):_.0f}".replace('_', thousands_sep)
+            if currency_symbol == True:
+                final_value = f"{final_value} FCFA"
+
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep}")')
+        
+        except Exception as e:
+            print(e)
+
+        return None
+    
+    @_value_check
+    def XPF(self, value = None, *, thousands_sep: str = ',',
+            currency_symbol=False, sign_position="LEFT") -> str:
+        # You can define the decimal places (default = 2)
+        # You can define if you want the currency sign (default = False)
+
+        try:
+            sign_position = sign_position.lower()
+            if sign_position not in self._right_positions and sign_position not in self._left_positions:
+                print(f'Currency Formatter: Invalid sign_position inputted. ("{sign_position}")')
+                return None
+            
+            if sign_position in self._right_positions:
+                sign_position = "RIGHT"
+            elif sign_position in self._left_positions:
+                sign_position = "LEFT"
+            else:
+                raise ReferenceError
+
+            if currency_symbol == True:
+                match sign_position:
+                    case "RIGHT":
+                        final_value = f"{float(value):_.0f} F".replace('_', thousands_sep)
+                    case "LEFT":
+                        final_value = f"₣{float(value):_.0f}".replace('_', thousands_sep)
+            else:
+                final_value = f"{float(value):_.0f}".replace('_', thousands_sep)
+
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep}")')
+        
+        except ReferenceError:
+            print(f'Currency Formatter: The inputted position is not valid. Must be left or right. ("{sign_position}")')
+
+        except Exception as e:
+            print(e)
+
+        return None
+    
+    @_value_check
+    def DZD(self, value = None, *, thousands_sep: str = ',',
+            decimal_sep: str = '.', spaced_sign=True,
+            currency_symbol=False, dzd_sign=True, decimals=2) -> str:
+
+        try:
+            final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
+            if currency_symbol == True:
+                match dzd_sign:
+                    case True:
+                        dzd_sign = "دج"
+                    case False:
+                        dzd_sign = "DA"
+                if spaced_sign == True:
+                    dzd_sign += " "
+
+                final_value = f"{final_value} {dzd_sign}"
+                
+            return final_value
+        
+        except TypeError:
+            print(f'Currency Formatter: The inputted value is not a String type. ("{thousands_sep if not isinstance(thousands_sep, str) else decimal_sep}")')
+        
         except Exception as e:
             print(e)
 
