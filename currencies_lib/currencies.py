@@ -56,6 +56,7 @@ class Currency_Formatter():
         }
 
     def _value_check(func):
+        """Checks if the method has a valid value"""
         @wraps(func)
         def inner(self, value = None, *args, **kwargs):
             try:
@@ -80,7 +81,26 @@ class Currency_Formatter():
 
     @_value_check
     def as_percentage(self, value = None, percent = None, *, decimals=2, isfloat=True, subtraction=False) -> float:
-        # Usage: as_percentage(value=100, percentage="25%") -> 25
+        """Converts or adjusts a numeric value based on a given percentage.
+        
+        Can return a percentage of the value (e.g., 25% of 100 = 25) or reduce the value by the specified percentage (e.g., 100 reduced by 25% = 75)
+
+        Parameters
+        ----------
+        value: int or float
+            The value to be formatted
+        percent: int or float (or str in cases like "20%")
+            The percentage used to format the value
+
+        - Optional Kwargs
+        
+        subtraction: bool
+            Defines if the value should be subtracted by the percenatege or not, by default False
+        decimals: int
+            Defines the decimal places in the final value, by default 2
+        isfloat: bool
+            Forces the value as a float number, by default True
+        """
         try:
             if not percent:
                 print('Currency Formatter: The percentage value is missing.')
@@ -110,6 +130,8 @@ class Currency_Formatter():
         """The use of this method is not recommended. Only use it if you know what you're doing.
 
         Instead, use "format_currency" to a custom format.
+
+        This method is used to input custom formats such as f"{:.2f}"
         """
         if not custom_format:
             print(f'Currency Formatter: Format must be provided.')
@@ -159,8 +181,23 @@ class Currency_Formatter():
         return None
    
     @_value_check
-    def unit_abbreviator(self, value:float = None, decimals=1) -> str:
+    def unit_abbreviator(self, value = None, decimals=1) -> str:
         # 1000 as > 1k || 1000000 as > 1M
+        """Abbreviates a numeric value to its corresponding unit acronym (e.g., 1000 -> 1k).
+
+        Parameters
+        ----------
+        value : int or float
+            numeric value to abbreviate
+        decimals : int, optional
+            number of decimal places, by default 1
+
+        Returns
+        -------
+        str
+            abbreviated value
+            -->> 1k, 1M, 1B, etc.
+        """
         
         try:
             for divisor, suffix in sorted(self._unit_abbreviator_dict.items(), reverse=True):
@@ -177,7 +214,18 @@ class Currency_Formatter():
     @_value_check
     def format_currency(self, value: float = None, *, currency_symbol:str ='',
             sign_position:str ='left', thousands_sep:str =',',
-            decimal_sep: str ='.', decimals:int =2) -> str:
+            decimal_sep: str ='.', decimals: int = 2) -> str:
+        """Formats a value to a specified currency format
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default '.'
+        -    `decimal_sep` (str): Separator for decimal places, by default ','
+        -    `sign_position` (str): Defines the position for the currency_symbol, by default "left"
+        -    `currency_symbol` (str): Defines the currency symbol, by default None ('')
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
         
         try:
             final_value = f"{float(value):_.{decimals}f}".replace('.', decimal_sep).replace('_', thousands_sep)
@@ -207,8 +255,22 @@ class Currency_Formatter():
 
         return None
 
-    def detect_currency(self, value:str = None):
-        # Can be imprecise. Needs more tests
+    def detect_currency(self, value:str = None) -> str:
+        """Detects the currency used in a string
+        
+        Available currencies for detection:
+        USD | BRL | EUR | RUB | GBP | JPY | CAD | INR
+
+        Parameters
+        ----------
+        value : str
+            Value to be analized
+
+        Returns
+        -------
+        str
+            Returns the currency if detected
+        """
         try:
             if not value:
                 raise ValueError("Currency Formatter: The value must be provided")
@@ -226,6 +288,14 @@ class Currency_Formatter():
         return None
 
     def str_to_float(self, value:str = None) -> float:
+        """Translates a string formatted value to float
+        (e.g. "$ 1.000,50" to 1000.50)
+
+        Parameters
+        ----------
+        value : str
+            String value to be formatted
+        """
         # Can be imprecise
         try:
             if not value:
@@ -274,10 +344,19 @@ class Currency_Formatter():
 
     @_value_check
     def unspecified_currency(self, value = None, *, thousands_sep: str = '.',
-            decimal_sep: str = ',',
-            currency_symbol=True, sign_position="LEFT", decimals=2) -> str:
-        # You can define the decimal places (default = 2)
-        # You can define if you want the currency sign (default = False)
+            decimal_sep: str = ',',currency_symbol=True,
+            sign_position="LEFT", decimals=2) -> str:
+        """Formats a value to a non specified currency format with the "¤" symbol.
+        ### Args:
+        -    `value` (int or float): Value to be formatted
+        ---
+        ### Optional kwargs:
+        -    `thousands_sep` (str): Separator for thousand decimal places, by default '.'
+        -    `decimal_sep` (str): Separator for decimal places, by default ','
+        -    `sign_position` (str): Defines the position for the currency_symbol, by default "left"
+        -    `currency_symbol` (str): Defines if the symbol should be used, by default True
+        -    `decimals` (int): Number of decimal places when formatted, by default 2
+        """
 
         try:
             sign_position = sign_position.lower()

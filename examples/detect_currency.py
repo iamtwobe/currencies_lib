@@ -1,5 +1,12 @@
 from currencies_lib import detect_currency, str_to_float, USD
 
+
+"""
+    Available currencies for detection:
+    USD | BRL | EUR | RUB | GBP |
+    JPY | CAD | INR
+"""
+
 def main():
 
     # Usage:
