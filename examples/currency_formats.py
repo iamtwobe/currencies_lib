@@ -1,6 +1,6 @@
 from currencies_lib import EUR
 
-def main(value = None):
+def main(value):
     """
     All other currencies use the same types of args.
     Some might have less kwargs than the "EUR", because Euro uses lots of formats,
@@ -12,32 +12,27 @@ def main(value = None):
 
     # Simple usage:
     print(
-        EUR(value)
+        EUR(value) # you can add (spaced=True) so it adds a space between the value and the symbol
+    ) # >> "€1.250,51"
+
+    # No symbol:
+    print(
+        EUR(value, symbol='')
     ) # >> "1.250,51"
 
     # With decimals:
     print(
         EUR(value, decimals=3)
-    ) # >> "1.250,505"
-
-    # With currency symbol:
-    print(
-        EUR(value, currency_symbol=True)
-    ) # >> "EUR 1.250,51"
-
-    # With euro sign
-    print(
-        EUR(value, currency_symbol=True, eur_sign=True)
-    ) # >> "€ 1.250,51"
+    ) # >> "€1.250,505"
 
     # With position
     print(
-        EUR(value, currency_symbol=True, eur_sign=True, sign_position="right")
+        EUR(value, symbol_position="right")
     ) # >> "1.250,51 €"
 
     # Customized separators:
     print(
-        EUR(value, thousands_sep='!!', decimal_sep=';;', decimals=3, currency_symbol=True, eur_sign=True)
+        EUR(value, thousands_sep='!!', decimal_sep=';;', decimals=3)
     ) # >> "€ 1!!250;;505"
 
 

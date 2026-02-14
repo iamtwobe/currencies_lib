@@ -5,7 +5,7 @@ with open('README.md', 'r') as f:
 
 setup(
     name="currencies_lib",
-    version="1.0.3",
+    version="2.0.0",
     description="A currency formatter for many currencies",
     packages=find_packages(where="."),
     long_description=description,

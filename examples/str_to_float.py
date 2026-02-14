@@ -1,6 +1,6 @@
 from currencies_lib import str_to_float
 
-def main(value = None):
+def main(value):
 
     # Usage:
     print(

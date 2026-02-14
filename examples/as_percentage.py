@@ -1,6 +1,6 @@
 from currencies_lib import as_percentage
 
-def main(value = None):
+def main(value):
     
     # Basic usage:
     print(
@@ -32,7 +32,7 @@ def main(value = None):
     ) # >> 179.950 (359 - 50%)
 
     print(
-        _value - as_percentage(_value, percent="62%")
+        _value - as_percentage(_value, percent="62%") # Deducting 62% manually
     ) # >> 136.76 (359 - 62%)
 
 if __name__ == "__main__":
